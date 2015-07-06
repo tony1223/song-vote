@@ -133,7 +133,8 @@
 
 	  getInitialState: function getInitialState() {
 	    return {
-	      vote: {},
+	      // vote:{},
+	      vote: this.props.vote || {},
 	      button: "送出"
 	    };
 	  },
@@ -160,6 +161,7 @@
 	    console.log(arguments);
 	  },
 	  onSubmit: function onSubmit() {
+	    var comp = this;
 	    var materials = this.props.songs;
 	    var lock_grid = {
 	      1: 0,
@@ -191,15 +193,25 @@
 	        all_selected = false;
 	      }
 	    }
-	    if (!all_selected) {
-	      alert("請先選完十首評分歌曲。");
-	    }
-	    console.log(this.state.vote);
+	    if (!all_selected) {}
 
 	    this.setState({ button: "送出中，請稍後" });
 
-	    $.post("http://google.com", function () {
-	      this.setState({ button: "已完成" });
+	    $.ajax({
+	      type: "POST",
+	      headers: { "X-Parse-Application-Id": "BVMiiOrTCynefil7p2yRQpjIRhYQElfiAHXtByjs",
+	        "X-Parse-REST-API-Key": "xJXfAjz4Ll2YHmriuILSOXO9HXxD1M3SmxeaZ8kt" },
+	      url: "https://api.parse.com/1/functions/v",
+	      data: JSON.stringify({ uID: this.props.user.objectId,
+	        vote: this.state.vote }),
+	      contentType: "application/json"
+	    }).then(function (data) {
+	      if (data.result.ok) {
+	        comp.setState({ button: "已完成" });
+	        alert("已送出完成，至最終結果前仍然可以用本連結修正您的評分。");
+	      } else {
+	        comp.setState({ button: "送出時發生錯誤" });
+	      }
 	    });
 	  },
 	  render: function render() {
@@ -248,6 +260,12 @@
 	      "div",
 	      null,
 	      React.createElement("p", null),
+	      React.createElement(
+	        "p",
+	        null,
+	        this.props.user.name,
+	        " 老師的評分單"
+	      ),
 	      React.createElement("p", null),
 	      React.createElement(
 	        "table",
@@ -312,6 +330,9 @@
 	});
 
 	module.exports = MaterialTable;
+
+	// alert("請先選完十首評分歌曲。");
+	// return true;
 
 /***/ },
 /* 2 */
@@ -1233,11 +1254,31 @@
 	var materialDatas = __webpack_require__(15);
 	var MaterialTable = __webpack_require__(1);
 
-	React.render(React.createElement(
-		"div",
-		{ className: "container" },
-		React.createElement(MaterialTable, { songs: materialDatas })
-	), document.getElementById("react-root"));
+	var getParam = function getParameterByName(name) {
+	  name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
+	  var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
+	      results = regex.exec(location.search);
+	  return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
+	};
+
+	$.ajax({
+	  type: "POST",
+	  headers: { "X-Parse-Application-Id": "BVMiiOrTCynefil7p2yRQpjIRhYQElfiAHXtByjs",
+	    "X-Parse-REST-API-Key": "xJXfAjz4Ll2YHmriuILSOXO9HXxD1M3SmxeaZ8kt" },
+	  url: "https://api.parse.com/1/functions/gua",
+	  data: JSON.stringify({ uID: getParam("id") }),
+	  contentType: "application/json"
+	}).then(function (data) {
+	  if (data.result.u != null) {
+	    React.render(React.createElement(
+	      "div",
+	      { className: "container" },
+	      React.createElement(MaterialTable, { vote: data.result.v, user: data.result.u, songs: materialDatas })
+	    ), document.getElementById("react-root"));
+	  } else {
+	    alert("您沒有權限存取本頁");
+	  }
+	});
 
 /***/ },
 /* 15 */
@@ -3137,6 +3178,7 @@
 	    "winners": false
 	  }
 	];
+
 
 	module.exports =  datas;
 
