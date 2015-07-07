@@ -44,7 +44,7 @@
 /* 0 */
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = __webpack_require__(14);
+	module.exports = __webpack_require__(15);
 
 
 /***/ },
@@ -1243,7 +1243,8 @@
 
 
 /***/ },
-/* 14 */
+/* 14 */,
+/* 15 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -1251,7 +1252,7 @@
 	var React = __webpack_require__(2);
 	var cx = __webpack_require__(3);
 
-	var materialDatas = __webpack_require__(15);
+	var materialDatas = __webpack_require__(16);
 	var MaterialTable = __webpack_require__(1);
 
 	var getParam = function getParameterByName(name) {
@@ -1281,7 +1282,7 @@
 	});
 
 /***/ },
-/* 15 */
+/* 16 */
 /***/ function(module, exports) {
 
 	var datas = [{
