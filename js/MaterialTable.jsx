@@ -6,8 +6,11 @@ var MaterialRow = React.createClass({
   getInitialState:function(){
     return {point: this.props.point};
   },
-  handleTDClick:function(num){
+  handleTDClick:function(num,e){
     var input = React.findDOMNode(this.refs["p"+num]);
+    if(e.target == input){
+      input.checked = !!!input.checked;
+    }
     if(!input.checked){
       this.props.handleClick(this.props.item,num);
     }else{
@@ -87,7 +90,6 @@ var MaterialTable = React.createClass({
     var vote = this.state.vote;
     vote[sing.track_id] = point;
     this.setState({vote:vote});
-    console.log(arguments);
   },
   onSubmit:function(){
     var comp = this;
