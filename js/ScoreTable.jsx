@@ -17,11 +17,8 @@ var ScoreRow = React.createClass({
       <tr className="song">
         <td>
           #{item.id} {item.title}<br />
-          {item.author_name} <br />
-          <a target="_blank" href={
-            "https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/"+
-            item.track_id +"&amp;auto_play=true"}>在新視窗播放</a>
         </td>
+        <td>{item.author_name} </td>
         <td >{item.vote_count} (#{item.vote_index})</td>
         <td> {item.admin_sum} (#{this.props.index}) </td>
         {
@@ -124,7 +121,8 @@ var MaterialTable = React.createClass({
         <table style={{width:'100%','padding-left':'20px','padding-right':'20px'}} className="table table-bordered col-xs-12">
           <tbody>
             <tr >
-              <td width="20%">#編號 名稱</td>
+              <td width="10%">#編號</td>
+              <td  width="20%">名稱</td>
               <td  width="10%">網友票數</td>
               <td  width="10%">評審總分</td>
               {votes.map(function(vote){

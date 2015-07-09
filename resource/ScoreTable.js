@@ -989,15 +989,13 @@
 	        item.id,
 	        " ",
 	        item.title,
-	        React.createElement("br", null),
+	        React.createElement("br", null)
+	      ),
+	      React.createElement(
+	        "td",
+	        null,
 	        item.author_name,
-	        " ",
-	        React.createElement("br", null),
-	        React.createElement(
-	          "a",
-	          { target: "_blank", href: "https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/" + item.track_id + "&amp;auto_play=true" },
-	          "在新視窗播放"
-	        )
+	        " "
 	      ),
 	      React.createElement(
 	        "td",
@@ -1144,8 +1142,13 @@
 	            null,
 	            React.createElement(
 	              "td",
+	              { width: "10%" },
+	              "#編號"
+	            ),
+	            React.createElement(
+	              "td",
 	              { width: "20%" },
-	              "#編號 名稱"
+	              "名稱"
 	            ),
 	            React.createElement(
 	              "td",

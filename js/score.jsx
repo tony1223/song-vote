@@ -21,7 +21,7 @@ $.ajax({
 }).then(function(data){
 	if(data.result.votes != null){
 		React.render((
-			<div className="container">
+			<div className="">
 			    <ScoreTable votes={data.result.votes} songs={materialDatas} />
 		 	</div>
 		),document.getElementById("react-root"));
